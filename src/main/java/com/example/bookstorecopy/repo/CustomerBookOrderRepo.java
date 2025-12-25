@@ -4,9 +4,13 @@ import com.example.bookstorecopy.entities.CustomerBookOrder;
 import com.example.bookstorecopy.entities.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CustomerBookOrderRepo extends JpaRepository<CustomerBookOrder,Long> {
 
     List<CustomerBookOrder> findCustomerBookOrdersByOrderStatus(OrderStatus orderStatus);
+
+    int countByCreatedDateAfter(LocalDateTime date);
+    int countByCreatedDateBetween(LocalDateTime start, LocalDateTime end);
 }

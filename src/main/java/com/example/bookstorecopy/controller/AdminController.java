@@ -1,9 +1,6 @@
 package com.example.bookstorecopy.controller;
 
-import com.example.bookstorecopy.entities.Author;
-import com.example.bookstorecopy.entities.Book;
-import com.example.bookstorecopy.entities.Category;
-import com.example.bookstorecopy.entities.OrderStatus;
+import com.example.bookstorecopy.entities.*;
 import com.example.bookstorecopy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -32,6 +31,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AdminService adminService;
+
 
 
     @GetMapping("/dashboard")
@@ -44,6 +46,23 @@ public class AdminController {
         model.addAttribute("books",bookService.findAllBook());
         model.addAttribute("placedOrders",customerService.findPlacedOrders());
         model.addAttribute("allOrders",customerService.findAllOrders());
+
+        List<Category> categories = categoryService.findAllCategories();
+        List<Author> authors = authorService.findAllAuthor();
+        List<Book> books = bookService.findAllBook();
+        List<CustomerBookOrder> placedOrders = customerService.findAllOrders();
+
+        // Calculate trends (comparing current month vs previous month)
+        model.addAttribute("categories", categories);
+        model.addAttribute("authors", authors);
+        model.addAttribute("books", books);
+        model.addAttribute("placedOrders", placedOrders);
+
+        // Calculate trend percentages
+        model.addAttribute("categoryTrend", adminService.calculateTrend("category"));
+        model.addAttribute("authorTrend", adminService.calculateTrend("author"));
+        model.addAttribute("bookTrend", adminService.calculateTrend("book"));
+        model.addAttribute("orderTrend", adminService.calculateTrend("order"));
         return "dashboard";
     }
 

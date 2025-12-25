@@ -2,229 +2,450 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Title</title>
-  <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-  <link href="
-https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css
-" rel="stylesheet">
-  <link rel="stylesheet" href="../../static/bootstrap/css/dashboard.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/dashboard.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body id="dashboard-body" th:fragment="dashboard">
- <header class="d-flex justify-content-between py-2 bg-primary text-white">
-   <div class="container">
-     <div class="row">
-       <div class="col">
-         <h1>DashBoard</h1>
-       </div>
-     </div>
-   </div>
- </header>
-<section class="py-5 mb-4 bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-3 mb-3">
-        <a href="#" class="btn bg-primary mr-2 btn-lg w-100" type="button" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-pencil-square"></i> Category</a>
-      </div>
-      <div class="col-12 col-md-3 mb-3">
-        <a href="#" class="btn bg-success mr-2 btn-lg w-100" data-bs-toggle="modal" data-bs-target="#authorModal"><i class="bi bi-pencil-square"></i> Author</a>
-      </div>
-      <div class="col-12 col-md-3 mb-3">
-        <a href="#" class="btn bg-warning mr-2 btn-lg w-100" data-bs-toggle="modal" data-bs-target="#bookModal"><i class="bi bi-pencil-square"></i> Book</a>
-      </div>
-      <div class="col-12 col-md-3 mb-3">
-        <a href="#" class="btn bg-dark mr-2 btn-lg w-100" data-bs-toggle="modal" data-bs-target="#userManagementModal"><i class="bi bi-pencil-square"></i>User</a>
-      </div>
+
+<!-- ======= Header Section ======= -->
+<header class="dashboard-header">
+    <div class="container-fluid px-4 py-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-icon">
+                    <i class="bi bi-book-half"></i>
+                </div>
+                <div>
+                    <h1 class="logo mb-0">BookShelf</h1>
+                    <p class="logo-subtitle mb-0">Admin Dashboard</p>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <!-- Notification Button -->
+                <button class="btn-icon" title="Notifications" aria-label="Notifications">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <!-- Profile Button -->
+                <button class="btn-icon" title="Profile" aria-label="Profile">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+</header>
+
+<!-- ======= Dashboard Actions Section ======= -->
+<section class="dashboard-actions py-4">
+    <div class="container">
+        <h2 class="section-title mb-4">Quick Actions</h2>
+        <div class="row g-3">
+            <!-- Category Action Button -->
+            <div class="col-6 col-md-3">
+                <button class="action-card w-100" data-bs-toggle="modal" data-bs-target="#categoryModal" aria-label="Open Category Modal">
+                    <div class="action-card-icon bg-gradient-primary">
+                        <i class="bi bi-folder-plus"></i>
+                    </div>
+                    <h3 class="action-card-title">Category</h3>
+                    <p class="action-card-desc">Manage categories</p>
+                </button>
+            </div>
+            <!-- Author Action Button -->
+            <div class="col-6 col-md-3">
+                <button class="action-card w-100" data-bs-toggle="modal" data-bs-target="#authorModal" aria-label="Open Author Modal">
+                    <div class="action-card-icon bg-gradient-success">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+                    <h3 class="action-card-title">Author</h3>
+                    <p class="action-card-desc">Add new authors</p>
+                </button>
+            </div>
+            <!-- Book Action Button -->
+            <div class="col-6 col-md-3">
+                <button class="action-card w-100" data-bs-toggle="modal" data-bs-target="#bookModal" aria-label="Open Book Modal">
+                    <div class="action-card-icon bg-gradient-warning">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h3 class="action-card-title">Book</h3>
+                    <p class="action-card-desc">Add new books</p>
+                </button>
+            </div>
+            <!-- User Management Action Button -->
+            <div class="col-6 col-md-3">
+                <button class="action-card w-100" data-bs-toggle="modal" data-bs-target="#userManagementModal" aria-label="Open User Management Modal">
+                    <div class="action-card-icon bg-gradient-danger">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3 class="action-card-title">User</h3>
+                    <p class="action-card-desc">Manage users</p>
+                </button>
+            </div>
+        </div>
+    </div>
 </section>
 
- <section>
-   <div class="container">
-     <div class="row">
-       <div class="col-12 col-lg-9 mb-3">
-         <div th:insert="fragments/placedOrderTable.html::placeOrder"></div>
-       </div>
-       <div class="col-12 col-lg-3">
-         <div class="card bg-primary text-center mb-3 text-white shadow">
-           <div class="card-body">
-             <h1>Category</h1>
-             <h1 class="card-text mb-2"><i class="bi bi-folder2-open"></i>
-               <span class="card-text" th:text="${categories.size()}"></span>
-             </h1>
-             <a href="#" th:href="@{/category/findAll}" class="btn btn-outline-light btn-block">View</a>
-           </div>
-         </div>
-         <div class="card bg-success text-center mb-3 text-white shadow">
-           <div class="card-body">
-             <h1>Author</h1>
-             <h1 class="card-text mb-2"><i class="bi bi-folder2-open"></i>
-               <span class="card-text" th:text="${authors.size()}"></span>
-             </h1>
-             <a href="#" th:href="@{/author/findAll}" class="btn btn-outline-light btn-block">View</a>
-           </div>
-         </div>
-         <div class="card bg-warning text-center mb-3 text-white shadow">
-           <div class="card-body">
-             <h1>Book</h1>
-             <h1 class="card-text mb-2"><i class="bi bi-folder2-open"></i>
-               <span class="card-text" th:text="${books.size()}"></span>
-             </h1>
-             <a href="#" th:href="@{/book/findAll}" class="btn btn-outline-light btn-block">View</a>
-           </div>
-         </div>
-         <div class="card bg-danger text-center mb-3 text-white shadow">
-           <div class="card-body">
-             <h1>Order</h1>
-             <h1 class="card-text mb-2"><i class="bi bi-folder2-open"></i>
-               <span class="card-text" th:text="${placedOrders.size()}"></span>
-             </h1>
-             <a href="#" th:href="@{/admin/order/findAll}" class="btn btn-outline-light btn-block">View</a>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- </section>
- <!-- Category Modal -->
+<!-- ======= Main Dashboard Stats Section ======= -->
+<section class="py-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Orders Table -->
+            <div class="col-12 col-lg-8">
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h2 class="content-card-title">Recent Orders</h2>
+                        <a th:href="@{/admin/order/findAll}" class="btn-link">View All <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <!-- Placed Orders Table Fragment -->
+                    <div th:insert="fragments/placedOrderTable.html::placeOrder"></div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="col-12 col-lg-4">
+                <div class="stats-grid">
+                    <!-- Category Stats Card -->
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-icon bg-gradient-primary">
+                                <i class="bi bi-folder2-open"></i>
+                            </div>
+                            <!-- Dynamic Trend -->
+                            <div th:if="${categoryTrend.hasData}"
+                                 th:classappend="${categoryTrend.isPositive} ? 'stat-trend positive' : 'stat-trend negative'">
+                                <i th:class="${categoryTrend.isPositive} ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+                                <span th:text="${#numbers.formatDecimal(categoryTrend.percentage, 1, 0)} + '%'">0%</span>
+                            </div>
+                            <div th:unless="${categoryTrend.hasData}" class="stat-trend neutral">
+                                <i class="bi bi-dash"></i> N/A
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Categories</h3>
+                            <p class="stat-number" th:text="${categories.size()}">0</p>
+                        </div>
+                        <a th:href="@{/category/findAll}" class="stat-link" aria-label="View All Categories">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Author Stats Card -->
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-icon bg-gradient-success">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <!-- Dynamic Trend -->
+                            <div th:if="${authorTrend.hasData}"
+                                 th:classappend="${authorTrend.isPositive} ? 'stat-trend positive' : 'stat-trend negative'">
+                                <i th:class="${authorTrend.isPositive} ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+                                <span th:text="${#numbers.formatDecimal(authorTrend.percentage, 1, 0)} + '%'">0%</span>
+                            </div>
+                            <div th:unless="${authorTrend.hasData}" class="stat-trend neutral">
+                                <i class="bi bi-dash"></i> N/A
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Authors</h3>
+                            <p class="stat-number" th:text="${authors.size()}">0</p>
+                        </div>
+                        <a th:href="@{/author/findAll}" class="stat-link" aria-label="View All Authors">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Book Stats Card -->
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-icon bg-gradient-warning">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <!-- Dynamic Trend -->
+                            <div th:if="${bookTrend.hasData}"
+                                 th:classappend="${bookTrend.isPositive} ? 'stat-trend positive' : 'stat-trend negative'">
+                                <i th:class="${bookTrend.isPositive} ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+                                <span th:text="${#numbers.formatDecimal(bookTrend.percentage, 1, 0)} + '%'">0%</span>
+                            </div>
+                            <div th:unless="${bookTrend.hasData}" class="stat-trend neutral">
+                                <i class="bi bi-dash"></i> N/A
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Books</h3>
+                            <p class="stat-number" th:text="${books.size()}">0</p>
+                        </div>
+                        <a th:href="@{/book/findAll}" class="stat-link" aria-label="View All Books">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Order Stats Card -->
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-icon bg-gradient-danger">
+                                <i class="bi bi-cart-check"></i>
+                            </div>
+                            <!-- Dynamic Trend -->
+                            <div th:if="${orderTrend.hasData}"
+                                 th:classappend="${orderTrend.isPositive} ? 'stat-trend positive' : 'stat-trend negative'">
+                                <i th:class="${orderTrend.isPositive} ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+                                <span th:text="${#numbers.formatDecimal(orderTrend.percentage, 1, 0)} + '%'">0%</span>
+                            </div>
+                            <div th:unless="${orderTrend.hasData}" class="stat-trend neutral">
+                                <i class="bi bi-dash"></i> N/A
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-title">Orders</h3>
+                            <p class="stat-number" th:text="${placedOrders.size()}">0</p>
+                        </div>
+                        <a th:href="@{/admin/order/findAll}" class="stat-link" aria-label="View All Orders">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Modal -->
 <section>
-  <div class="modal fade" id="categoryModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Add Category</h5>
-          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" th:action="@{/category/save}" th:object="${category}" method="post">
-            <div class="form-group">
-              <label for="Cname">Category Name</label>
-              <input type="text" id="Cname" class="form-control" th:field="*{categoryName}">
+    <div class="modal fade" id="categoryModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modern-modal">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="modal-icon bg-gradient-primary">
+                            <i class="bi bi-folder-plus"></i>
+                        </div>
+                        <h5 class="modal-title mb-0">Add New Category</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/category/save}" th:object="${category}" method="post">
+                        <div class="form-group-modern">
+                            <label for="Cname" class="form-label-modern">Category Name</label>
+                            <input type="text" id="Cname" class="form-control-modern" th:field="*{categoryName}" placeholder="Enter category name" required>
+                        </div>
+                        <div class="modal-footer-actions">
+                            <button type="button" class="btn-secondary-modern" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn-primary-modern">
+                                <i class="bi bi-check-circle"></i> Save Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block mt-2">Save</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </section>
 
-<!--Author Modal -->
- <section>
-   <div class="modal fade" id="authorModal">
-     <div class="modal-dialog modal-lg">
-       <div class="modal-content">
-         <div class="modal-header bg-success text-white">
-           <h5 class="modal-title">Add Author</h5>
-           <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-           <form action="#" th:action="@{/author/save}" th:object="${author}" method="post">
-             <div class="form-group">
-               <label for="Aname">Author Name</label>
-               <input type="text" id="Aname" class="form-control" th:field="*{authorName}">
-               <label for="Adob">Date of Birth</label>
-               <input type="text" id="Adob" class="form-control" th:field="*{dateOfBirth}">
-               <label for="Aphone">Phone</label>
-               <input type="text" id="Aphone" class="form-control" th:field="*{phone}">
-               <label for="Aemail">Email</label>
-               <input type="text" id="Aemail" class="form-control" th:field="*{email}">
-               <label for="Aaddress">Address</label>
-               <input type="text" id="Aaddress" class="form-control" th:field="*{address}">
-             </div>
-             <button type="submit" class="btn btn-success btn-block mt-2">Save</button>
-           </form>
-         </div>
-       </div>
-     </div>
-   </div>
- </section>
-<!--Book Modal -->
+<!-- Author Modal -->
 <section>
-  <div class="modal fade" id="bookModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-warning text-white">
-          <h5 class="modal-title">Add Book</h5>
-          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="#" th:action="@{/book/save}" th:object="${book}" method="post">
-            <div class="form-group">
-              <label for="btitle">Title</label>
-              <input type="text" id="btitle" class="form-control" th:field="*{title}">
-              <label for="bprice">Price</label>
-              <input type="text" id="bprice" class="form-control" th:field="*{price}">
-              <label for="bypublish">Year Published</label>
-              <input type="date" id="bypublish" class="form-control" th:field="*{yearPublished}">
-              <label for="bdescription">Description</label>
-              <input type="text" id="bdescription" class="form-control" th:field="*{description}">
-              <label for="bimgurl">Image URL</label>
-              <input type="text" id="bimgurl" class="form-control" th:field="*{imageUrl}">
-              <div class="form-group">
-                <label>Select Category</label>
-                <select class="form-control" th:field="*{categoryId}">
-                  <option th:each="category:${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Select Author</label>
-                <select class="form-control" th:field="*{authorId}">
-                  <option th:each="author:${authors}" th:value="${author.id}" th:text="${author.authorName}"></option>
-                </select>
-              </div>
+    <div class="modal fade" id="authorModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modern-modal">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="modal-icon bg-gradient-success">
+                            <i class="bi bi-person-plus"></i>
+                        </div>
+                        <h5 class="modal-title mb-0">Add New Author</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/author/save}" th:object="${author}" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="Aname" class="form-label-modern">Author Name</label>
+                                    <input type="text" id="Aname" class="form-control-modern" th:field="*{authorName}" placeholder="Enter author name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="Adob" class="form-label-modern">Date of Birth</label>
+                                    <input type="date" id="Adob" class="form-control-modern" th:field="*{dateOfBirth}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="Aphone" class="form-label-modern">Phone</label>
+                                    <input type="tel" id="Aphone" class="form-control-modern" th:field="*{phone}" placeholder="+1 (555) 000-0000">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="Aemail" class="form-label-modern">Email</label>
+                                    <input type="email" id="Aemail" class="form-control-modern" th:field="*{email}" placeholder="author@example.com">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group-modern">
+                                    <label for="Aaddress" class="form-label-modern">Address</label>
+                                    <textarea id="Aaddress" class="form-control-modern" th:field="*{address}" rows="2" placeholder="Enter full address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer-actions">
+                            <button type="button" class="btn-secondary-modern" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn-success-modern">
+                                <i class="bi bi-check-circle"></i> Save Author
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-warning btn-block mt-2">Save</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </section>
+
+<!-- Book Modal -->
 <section>
-  <!-- Modal -->
-  <div class="modal fade" id="userManagementModal" tabindex="-1" role="dialog" aria-labelledby="userManagementModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="userManagementModalLabel">User Management</h5>
-          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="bookModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modern-modal">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="modal-icon bg-gradient-warning">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <h5 class="modal-title mb-0">Add New Book</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" th:action="@{/book/save}" th:object="${book}" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <div class="form-group-modern">
+                                    <label for="btitle" class="form-label-modern">Book Title</label>
+                                    <input type="text" id="btitle" class="form-control-modern" th:field="*{title}" placeholder="Enter book title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group-modern">
+                                    <label for="bprice" class="form-label-modern">Price ($)</label>
+                                    <input type="number" step="0.01" id="bprice" class="form-control-modern" th:field="*{price}" placeholder="0.00" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="bypublish" class="form-label-modern">Year Published</label>
+                                    <input type="date" id="bypublish" class="form-control-modern" th:field="*{yearPublished}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label for="bimgurl" class="form-label-modern">Image URL</label>
+                                    <input type="url" id="bimgurl" class="form-control-modern" th:field="*{imageUrl}" placeholder="https://example.com/image.jpg">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group-modern">
+                                    <label for="bdescription" class="form-label-modern">Description</label>
+                                    <textarea id="bdescription" class="form-control-modern" th:field="*{description}" rows="3" placeholder="Enter book description"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label class="form-label-modern">Select Category</label>
+                                    <select class="form-control-modern" th:field="*{categoryId}" required>
+                                        <option value="">Choose a category... </option>
+                                        <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group-modern">
+                                    <label class="form-label-modern">Select Author</label>
+                                    <select class="form-control-modern" th:field="*{authorId}" required>
+                                        <option value="">Choose an author...</option>
+                                        <option th:each="author:${authors}" th:value="${author.id}" th:text="${author.authorName}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer-actions">
+                            <button type="button" class="btn-secondary-modern" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn-warning-modern">
+                                <i class="bi bi-check-circle"></i> Save Book
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form th:action="@{/admin/create-user}" method="post">
-            <div class="form-group">
-              <label for="newUsername">New Username</label>
-              <input type="text" id="newUsername" name="username" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="newPassword">New Password</label>
-              <input type="password" id="newPassword" name="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="roles">Roles (comma-separated)</label>
-              <input type="text" id="roles" name="roles" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-success">Create User</button>
-          </form>
-
-          <hr>
-
-          <h5>Change Password</h5>
-          <form th:action="@{/admin/change-password}" method="post">
-            <div class="form-group">
-              <label for="changeUsername">Username</label>
-              <input type="text" id="changeUsername" name="username" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="newPasswordChange">New Password</label>
-              <input type="password" id="newPasswordChange" name="newPassword" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-warning">Change Password</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
+
+<!-- User Management Modal -->
+<section>
+    <div class="modal fade" id="userManagementModal" tabindex="-1" role="dialog" aria-labelledby="userManagementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modern-modal">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="modal-icon bg-gradient-danger">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h5 class="modal-title mb-0" id="userManagementModalLabel">User Management</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Create User Form -->
+                    <div class="user-management-section">
+                        <h6 class="section-subtitle"><i class="bi bi-person-plus-fill"></i> Create New User</h6>
+                        <form th:action="@{/admin/create-user}" method="post">
+                            <div class="form-group-modern">
+                                <label for="newUsername" class="form-label-modern">Username</label>
+                                <input type="text" id="newUsername" name="username" class="form-control-modern" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group-modern">
+                                <label for="newPassword" class="form-label-modern">Password</label>
+                                <input type="password" id="newPassword" name="password" class="form-control-modern" placeholder="Enter password" required>
+                            </div>
+                            <div class="form-group-modern">
+                                <label for="roles" class="form-label-modern">Roles</label>
+                                <input type="text" id="roles" name="roles" class="form-control-modern" placeholder="e.g., ADMIN, USER" required>
+                                <small class="form-text-modern">Separate multiple roles with commas</small>
+                            </div>
+                            <button type="submit" class="btn-success-modern w-100">
+                                <i class="bi bi-check-circle"></i> Create User
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="divider-modern"></div>
+
+                    <!-- Change Password Form -->
+                    <div class="user-management-section">
+                        <h6 class="section-subtitle"><i class="bi bi-key-fill"></i> Change Password</h6>
+                        <form th:action="@{/admin/change-password}" method="post">
+                            <div class="form-group-modern">
+                                <label for="changeUsername" class="form-label-modern">Username</label>
+                                <input type="text" id="changeUsername" name="username" class="form-control-modern" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group-modern">
+                                <label for="newPasswordChange" class="form-label-modern">New Password</label>
+                                <input type="password" id="newPasswordChange" name="newPassword" class="form-control-modern" placeholder="Enter new password" required>
+                            </div>
+                            <button type="submit" class="btn-warning-modern w-100">
+                                <i class="bi bi-key"></i> Change Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>
